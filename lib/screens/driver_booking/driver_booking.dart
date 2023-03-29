@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ui_page/helpers/size/size.dart';
 import 'package:ui_page/helpers/textstyle.dart';
-
 import 'package:ui_page/screens/widgets/booking_option.dart';
 import 'package:ui_page/screens/widgets/drop_down.dart';
 import 'package:ui_page/screens/widgets/radio.dart';
+import 'package:ui_page/screens/widgets/search_field.dart';
+import 'package:ui_page/screens/widgets/time_field.dart';
 
 class DriverBooking extends StatefulWidget {
   const DriverBooking({super.key});
@@ -115,7 +116,7 @@ class _DriverBookingState extends State<DriverBooking> {
             ),
             Container(
               margin: const EdgeInsets.only(left: 10),
-              width: 370,
+              width: MediaQuery.of(context).size.width * .95,
               padding: const EdgeInsets.only(left: 20),
               height: 50,
               decoration: BoxDecoration(
@@ -129,8 +130,8 @@ class _DriverBookingState extends State<DriverBooking> {
                     suffixIcon: const Icon(Icons.calendar_month)),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
+            Container(
+              margin: EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -170,42 +171,54 @@ class _DriverBookingState extends State<DriverBooking> {
             Ksize.ksize20,
             const RadioButton(),
             const DropDown(),
-            Ksize.ksize40,
+            // const Dropdwnn(),
+            Ksize.ksize20,
             Container(
-              height: 80,
+              height: MediaQuery.of(context).size.height * .078,
               width: double.infinity,
-              color: Color(0xffF2E8FF),
+              color: const Color(0xffF2E8FF),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
-                    height: 50,
-                    width: 150,
-                    color: Color(0xffFF7373),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [Icon(Icons.arrow_forward), Text('ONE WAY')],
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * .058,
+                    width: MediaQuery.of(context).size.width * .45,
+                    child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 10,
+                        backgroundColor: const Color(0xffFF7373),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      onPressed: () {
+                        showbottomSheet(context);
+                      },
+                      icon: const Icon(Icons.arrow_forward),
+                      label: const Text(
+                        'ONE WAY',
+                      ),
                     ),
                   ),
-                  Container(
-                    height: 50,
-                    width: 150,
-                    color: Color(0xffFF7373),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [Icon(Icons.arrow_forward), Text('ONE WAY')],
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * .058,
+                    width: MediaQuery.of(context).size.width * .45,
+                    child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 5,
+                        backgroundColor: const Color(0xffFF7373),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      onPressed: () {
+                        showbottomSheet(context);
+                      },
+                      icon: const Icon(Icons.arrow_forward),
+                      label: const Text(
+                        'ROUND WAY',
+                      ),
                     ),
-                  ),
-                  // ElevatedButton.icon(
-                  //   onPressed: () {},
-                  //   // style: ButtonStyle(  backgroundColor:MaterialStateProperty.lerp(a, b, t, (p0, p1, p2) => null)),
-                  //   icon: const Icon(Icons.arrow_forward),
-                  //   label: Text('ONE WAy'),
-                  // ),
-                  ElevatedButton.icon(
-                    onPressed: () {},
-                    icon: Icon(Icons.arrow_forward),
-                    label: Text('ROUND TRIP'),
                   ),
                 ],
               ),
@@ -215,64 +228,103 @@ class _DriverBookingState extends State<DriverBooking> {
       ),
     );
   }
-}
 
-class TimeField extends StatelessWidget {
-  const TimeField({
-    super.key,
-    this.hint,
-  });
-  final String? hint;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(left: 10),
-      width: MediaQuery.of(context).size.width * .3,
-      padding: const EdgeInsets.only(left: 20),
-      height: 45,
-      decoration: BoxDecoration(
-          color: Colors.grey.shade200, borderRadius: BorderRadius.circular(10)),
-      child: TextField(
-        decoration: InputDecoration(
-          hintText: hint,
-          hintStyle: Tstyles.greycolor16,
-          border: InputBorder.none,
-        ),
+  Future<dynamic> showbottomSheet(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
       ),
-    );
-  }
-}
-
-class SearchTextfield extends StatelessWidget {
-  const SearchTextfield({
-    super.key,
-    required this.hinttext,
-    this.leadingicon,
-    this.actionIcon,
-  });
-  final String hinttext;
-  final IconData? leadingicon;
-  final IconData? actionIcon;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(right: 10, left: 10, bottom: 15),
-      height: 50,
-      decoration: BoxDecoration(
-          color: Colors.grey.shade200, borderRadius: BorderRadius.circular(10)),
-      child: TextField(
-        textAlign: TextAlign.start,
-        decoration: InputDecoration(
-            hintText: hinttext,
-            border: InputBorder.none,
-            suffixIcon: Icon(actionIcon),
-            icon: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Icon(leadingicon),
-            )),
-      ),
+      builder: (context) {
+        return Container(
+          margin: const EdgeInsets.all(20),
+          height: MediaQuery.of(context).size.height * .32,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Ksize.ksize10,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Pay Out',
+                        style: Tstyles.greycolor16,
+                      ),
+                      Text(
+                        'Pay out your balance',
+                        style: Tstyles.greycolor,
+                      ),
+                    ],
+                  ),
+                  TextButton(
+                      onPressed: () {},
+                      child: Column(
+                        children: [
+                          Text('VIEW PRICING', style: Tstyles.theamHeading),
+                          Container(
+                            height: 1,
+                            width: 100,
+                            color: const Color(0xffFF7373),
+                          ),
+                        ],
+                      ))
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'RS:7563',
+                    style: Tstyles.priceTheame,
+                  )
+                ],
+              ),
+              Ksize.ksize20,
+              Text(
+                'Pickup location : Bus Stand Delhi',
+                style: Tstyles.greycolor16,
+              ),
+              Ksize.ksize10,
+              Text(
+                'Destination location: Railway Station Delhi',
+                style: Tstyles.greycolor16,
+              ),
+              Ksize.ksize10,
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    elevation: 5,
+                    backgroundColor: const Color(0xffFF7373),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                  onPressed: () {},
+                  child: Text(
+                    'Book Driver',
+                    style: Tstyles.hometitle,
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      'Cancel',
+                      style: Tstyles.heading,
+                    )),
+              )
+            ],
+          ),
+        );
+      },
     );
   }
 }
